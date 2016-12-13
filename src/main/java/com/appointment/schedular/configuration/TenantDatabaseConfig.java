@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -39,22 +40,32 @@ public class TenantDatabaseConfig {
 
    @Autowired
    private Environment springEnvironment;
-
+   
    @Bean
    public JpaVendorAdapter jpaVendorAdapter() {
       return new HibernateJpaVendorAdapter();
    }
-
+   
+   @Bean(name = "tenantDataSource")
+   public DataSource tenantDataSource() {
+      DriverManagerDataSource dataSource = new DriverManagerDataSource();
+      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname"));
+      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url")+"xy" + "?createDatabaseIfNotExist=true");
+      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user"));
+      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password"));
+      return dataSource;
+   }
+   
    @Bean(name = "tenantEntityManager")
-   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
-           MultiTenantConnectionProvider connectionProvider,
-           CurrentTenantIdentifierResolver tenantResolver) {
+   public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+							           MultiTenantConnectionProvider connectionProvider,
+							           CurrentTenantIdentifierResolver tenantResolver) {
       LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
-      emfBean.setDataSource(dataSource);
+      emfBean.setDataSource(tenantDataSource());
       emfBean.setPackagesToScan("com.appointment.schedular.model.tenant");
       emfBean.setJpaVendorAdapter(jpaVendorAdapter());
       Map<String, Object> properties = new HashMap<>();
-      properties.put(org.hibernate.cfg.Environment.MULTI_TENANT, MultiTenancyStrategy.DATABASE);
+      properties.put(org.hibernate.cfg.Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
       properties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");

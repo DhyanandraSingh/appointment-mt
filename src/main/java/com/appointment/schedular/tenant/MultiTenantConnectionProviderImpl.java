@@ -1,13 +1,13 @@
 package com.appointment.schedular.tenant;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.DataSource;
-
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.appointment.schedular.dao.master.TenantDao;
 import com.appointment.schedular.model.master.Tenant;
-
+	
 /**
  * @author Dhyanandra
  *
@@ -35,7 +35,12 @@ public class MultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMu
    private TenantDao tenantDao;
    
    @Autowired
+   @Qualifier("tenantDataSource")
    DataSource masterDataSource;
+   
+   /*@Autowired
+   @Qualifier("tenantEntityManager")
+   EntityManager*/
    
    private final Map<String, DataSource> map = new HashMap<>();
 
@@ -47,22 +52,18 @@ public class MultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMu
    private void init() {
       List<Tenant> tenants = tenantDao.findAll();
       for (Tenant tenant : tenants) {
-
          map.put(tenant.getTenantKey(), constructDataSource(tenant.getTenantKey()));
       }
    }
 
    private DataSource constructDataSource(String dbName) {
       DriverManagerDataSource dataSource = new DriverManagerDataSource();
-      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname",
-              "com.mysql.jdbc.Driver"));
-      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url", 
-              "jdbc:mysql://localhost:3307/") + dbName+"?createDatabaseIfNotExist=true");
-      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user", "root"));
-      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password", "root"));
+      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname"));
+      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url") + dbName+ "?createDatabaseIfNotExist=true");
+      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user"));
+      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password"));
       try {
          dataSource.getConnection().createStatement().execute("CREATE DATABASE IF NOT EXISTS " + dbName);
-         //dataSource.getConnection().createStatement().
       } catch (Exception ex) {
          System.out.println(ex);
       }
@@ -80,7 +81,6 @@ public class MultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMu
    }
 
    public void addTenant(String tenantKey) {
-      
       map.put(tenantKey, constructDataSource(tenantKey));
    }
 }

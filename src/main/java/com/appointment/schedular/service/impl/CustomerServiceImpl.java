@@ -16,7 +16,7 @@ import com.appointment.schedular.service.CustomerService;
  */
 
 @Service("CustomerServiceImpl")
-@Transactional
+@Transactional("tenantTransactionManager")
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired

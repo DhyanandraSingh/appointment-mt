@@ -20,7 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("{tenantId}/customer")
 public class CustomerController {
 
 	@Autowired

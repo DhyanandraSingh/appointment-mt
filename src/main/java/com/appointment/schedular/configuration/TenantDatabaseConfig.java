@@ -46,26 +46,26 @@ public class TenantDatabaseConfig {
    }
 
    @Bean(name = "tenantEntityManager")
-   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
-           MultiTenantConnectionProvider connectionProvider,
-           CurrentTenantIdentifierResolver tenantResolver) {
+   public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+										   DataSource dataSource,
+								           MultiTenantConnectionProvider connectionProvider,
+								           CurrentTenantIdentifierResolver tenantResolver) {
       LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
+      
       emfBean.setDataSource(dataSource);
       emfBean.setPackagesToScan("com.appointment.schedular.model.tenant");
       emfBean.setJpaVendorAdapter(jpaVendorAdapter());
+      
       Map<String, Object> properties = new HashMap<>();
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT, MultiTenancyStrategy.DATABASE);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
       properties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-        properties.put("hibernate.dialect", springEnvironment.getProperty("hibernate.dialect"
-              , "org.hibernate.dialect.MySQLDialect"));
-      properties.put("hibernate.show_sql", springEnvironment.getProperty("hibernate.show_sql"
-              , "true"));
-      properties.put("hibernate.format_sql", springEnvironment.getProperty("hibernate.format_sql"
-              , "true"));
-      properties.put("hibernate.hbm2ddl.auto", springEnvironment.getProperty("hibernate.hbm2ddl.auto"
-              , "update"));
+      properties.put("hibernate.dialect", springEnvironment.getProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect"));
+      properties.put("hibernate.show_sql", springEnvironment.getProperty("hibernate.show_sql", "true"));
+      properties.put("hibernate.format_sql", springEnvironment.getProperty("hibernate.format_sql", "true"));
+      properties.put("hibernate.hbm2ddl.auto", springEnvironment.getProperty("hibernate.hbm2ddl.auto", "update"));
+      
       emfBean.setJpaPropertyMap(properties);
       return emfBean;
    }

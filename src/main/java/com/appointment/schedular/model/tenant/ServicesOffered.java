@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class ServicesOffered {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "service_id")
 	private long serviceId;
 

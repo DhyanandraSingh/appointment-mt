@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class ServiceSchedule {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "service_schedule_id")
 	private long serviceScheduleId;
 

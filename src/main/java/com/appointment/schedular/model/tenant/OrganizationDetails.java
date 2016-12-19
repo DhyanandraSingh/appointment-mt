@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class OrganizationDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column( name = "organization_id" )
 	private long organizationId;
 	

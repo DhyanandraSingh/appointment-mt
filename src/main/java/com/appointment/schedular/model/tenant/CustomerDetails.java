@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class CustomerDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customer_id")
 	private long customerId;
 	

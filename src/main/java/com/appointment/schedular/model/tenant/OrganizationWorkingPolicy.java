@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class OrganizationWorkingPolicy {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "policy_id")
 	private long policyId;
 	

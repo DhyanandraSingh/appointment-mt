@@ -57,7 +57,7 @@ public class MultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMu
       dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname",
               "com.mysql.jdbc.Driver"));
       dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url", 
-              "jdbc:mysql://localhost:3307/") + dbName+"?createDatabaseIfNotExist=true");
+              "jdbc:mysql://localhost:3307/") + dbName +"?createDatabaseIfNotExist=true");
       dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user", "root"));
       dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password", "root"));
       try {

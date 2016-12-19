@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class ServiceCategories {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "service_category_id")
 	private long serviceCatId;
 	

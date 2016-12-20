@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.controller;
+package com.appointment.schedular.controller;
 
 import java.util.Map;
 
@@ -52,7 +52,7 @@ public class OrganizationController {
 	
 	// ........xxxxxx..............xxxxxxx................xxxxxxx.............//
 	
-	  *//************************* Working Policy *****************************//*
+	  /************************* Working Policy *****************************/
 	
 	// ........xxxxxx..............xxxxxxx................xxxxxxx.............//
 	
@@ -88,4 +88,3 @@ public class OrganizationController {
 
 	
 }
-*/

@@ -1,10 +1,11 @@
 package com.appointment.schedular.tenant;
 
-import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
@@ -23,8 +24,8 @@ public class TenantIdentifierInterceptorAdapter extends HandlerInterceptorAdapte
    @Autowired
    private TenantDao tenantDao;
 
-   @SuppressWarnings("unchecked")
-   @Override
+@SuppressWarnings("unchecked")
+@Override
    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
       
       Map<String, Object> pathVars

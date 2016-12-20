@@ -3,9 +3,7 @@ package com.appointment.schedular.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -20,20 +18,14 @@ import com.appointment.schedular.tenant.TenantIdentifierInterceptorAdapter;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.appointment.schedular"/*,
-			   excludeFilters = {
-			        @Filter(type = FilterType.ASSIGNABLE_TYPE,
-			                value = {
-			                    TenantDatabaseConfig.class
-			                })
-    			}*/)
+@ComponentScan(basePackages = "com.appointment.schedular" )
 public class AppConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	private TenantIdentifierInterceptorAdapter multiTenancyInterceptor;
 	
 	@Override
-	   public void addInterceptors(InterceptorRegistry registry) {
+	public void addInterceptors(InterceptorRegistry registry) {
 	      registry.addInterceptor(multiTenancyInterceptor);
 	}
 

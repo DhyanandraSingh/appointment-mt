@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.controller;
+package com.appointment.schedular.controller;
 
 import java.util.Map;
 
@@ -62,4 +62,3 @@ public class staffController {
 				return staff;
 			}
 }
-*/

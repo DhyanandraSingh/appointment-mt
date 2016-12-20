@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.controller;
+package com.appointment.schedular.controller;
 
 import java.util.Map;
 
@@ -63,7 +63,7 @@ public class CustomerController {
 		}
 	
    // ........xxxxxx..............xxxxxxx................xxxxxxx.............//
-						         	address 
+						         /*	address */
    // ........xxxxxx..............xxxxxxx................xxxxxxx.............//
 
 		@CrossOrigin
@@ -79,4 +79,3 @@ public class CustomerController {
 
 	
 }
-*/

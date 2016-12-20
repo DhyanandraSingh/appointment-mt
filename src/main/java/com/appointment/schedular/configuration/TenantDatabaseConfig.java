@@ -5,8 +5,10 @@ package com.appointment.schedular.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -40,43 +42,39 @@ public class TenantDatabaseConfig {
 
    @Autowired
    private Environment springEnvironment;
+
+   @Bean(name= "tenantDataSource")
+   public DataSource tenantDataSource() {
+      DriverManagerDataSource dataSource = new DriverManagerDataSource();
+      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname", "com.mysql.jdbc.Driver"));
+      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url")+ "srgsrohtak" + "?createDatabaseIfNotExist=true");
+      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user", "root"));
+      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password", "root"));
+      return dataSource;
+   }
    
    @Bean
    public JpaVendorAdapter jpaVendorAdapter() {
       return new HibernateJpaVendorAdapter();
    }
-   
-   @Bean(name = "tenantDataSource")
-   public DataSource tenantDataSource() {
-      DriverManagerDataSource dataSource = new DriverManagerDataSource();
-      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname"));
-      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url")+"xy" + "?createDatabaseIfNotExist=true");
-      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user"));
-      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password"));
-      return dataSource;
-   }
-   
+
    @Bean(name = "tenantEntityManager")
-   public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-							           MultiTenantConnectionProvider connectionProvider,
-							           CurrentTenantIdentifierResolver tenantResolver) {
+   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+									           MultiTenantConnectionProvider connectionProvider,
+									           CurrentTenantIdentifierResolver tenantResolver) {
       LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
       emfBean.setDataSource(tenantDataSource());
       emfBean.setPackagesToScan("com.appointment.schedular.model.tenant");
       emfBean.setJpaVendorAdapter(jpaVendorAdapter());
       Map<String, Object> properties = new HashMap<>();
-      properties.put(org.hibernate.cfg.Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
+      properties.put(org.hibernate.cfg.Environment.MULTI_TENANT, MultiTenancyStrategy.DATABASE);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
       properties.put(org.hibernate.cfg.Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
       properties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-        properties.put("hibernate.dialect", springEnvironment.getProperty("hibernate.dialect"
-              , "org.hibernate.dialect.MySQLDialect"));
-      properties.put("hibernate.show_sql", springEnvironment.getProperty("hibernate.show_sql"
-              , "true"));
-      properties.put("hibernate.format_sql", springEnvironment.getProperty("hibernate.format_sql"
-              , "true"));
-      properties.put("hibernate.hbm2ddl.auto", springEnvironment.getProperty("hibernate.hbm2ddl.auto"
-              , "update"));
+      properties.put("hibernate.dialect", springEnvironment.getProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect"));
+      properties.put("hibernate.show_sql", springEnvironment.getProperty("hibernate.show_sql", "true"));
+      properties.put("hibernate.format_sql", springEnvironment.getProperty("hibernate.format_sql", "true"));
+      properties.put("hibernate.hbm2ddl.auto", springEnvironment.getProperty("hibernate.hbm2ddl.auto", "update"));
       emfBean.setJpaPropertyMap(properties);
       return emfBean;
    }

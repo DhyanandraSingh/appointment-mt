@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.controller;
+package com.appointment.schedular.controller;
 
 import java.util.Map;
 
@@ -59,7 +59,7 @@ public class ServicesController {
 
 	// ........xxxxxx..............xxxxxxx................xxxxxxx.............//
 
-	  *//************************* Services Offered ****************************//*
+	  /************************* Services Offered ****************************/
 
 	// ........xxxxxx..............xxxxxxx................xxxxxxx.............//
 	
@@ -97,4 +97,3 @@ public class ServicesController {
 	
 
 }
-*/

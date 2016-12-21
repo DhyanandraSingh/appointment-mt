@@ -34,14 +34,17 @@ public class TenantIdentifierInterceptorAdapter extends HandlerInterceptorAdapte
 	
 	  Enumeration headerNames = req.getHeaderNames();
 	  while (headerNames.hasMoreElements()) {
+	
 		String key = (String) headerNames.nextElement();
-		String value = req.getHeader(key);
-		map.put(key, value);
+		if(key.equals("tenantid")){
+			String value = req.getHeader(key);
+			map.put(key, value);
+		}
 	  }
 	
       if (map.containsKey("tenantid")) {
          String tenantId = map.get("tenantid").toString();
-         Optional<Tenant> thisTenant = (Optional<Tenant>) tenantDao.findByTenantKey(tenantId);
+         Optional<Tenant> thisTenant =  tenantDao.findByTenantKey(tenantId);
          if (thisTenant.isPresent()) {
             req.setAttribute("Current_Tenant", thisTenant.get().getTenantKey());
             return true;

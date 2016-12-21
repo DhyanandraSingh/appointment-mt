@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.ServiceSchedularDao;
 import com.appointment.schedular.model.tenant.ServiceSchedule;
 
@@ -16,9 +16,9 @@ import com.appointment.schedular.model.tenant.ServiceSchedule;
  *
  */
 
-@Repository("serviceSchelarDao")
-public class ServiceSchedularDaoImppl 
-	   extends AbstractDao<Long, ServiceSchedule>
+@Repository("serviceSchedularDao")
+public class ServiceSchedularDaoImpl 
+	   extends AbstractTenantDao<Long, ServiceSchedule>
 	   implements ServiceSchedularDao {
 
 	@Override

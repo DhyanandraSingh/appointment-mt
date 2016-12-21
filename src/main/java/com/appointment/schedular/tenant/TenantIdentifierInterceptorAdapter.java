@@ -41,7 +41,7 @@ public class TenantIdentifierInterceptorAdapter extends HandlerInterceptorAdapte
 	
       if (map.containsKey("tenantid")) {
          String tenantId = map.get("tenantid").toString();
-         Optional<Tenant> thisTenant = tenantDao.findByTenantKey(tenantId);
+         Optional<Tenant> thisTenant = (Optional<Tenant>) tenantDao.findByTenantKey(tenantId);
          if (thisTenant.isPresent()) {
             req.setAttribute("Current_Tenant", thisTenant.get().getTenantKey());
             return true;

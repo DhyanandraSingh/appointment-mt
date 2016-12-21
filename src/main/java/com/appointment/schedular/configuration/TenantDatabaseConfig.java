@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -44,15 +45,29 @@ public class TenantDatabaseConfig {
    public JpaVendorAdapter jpaVendorAdapter() {
       return new HibernateJpaVendorAdapter();
    }
+   
+   @Bean(name= "tenantDataSource")
+   public DataSource tenantDataSource() {
+	  
+	   final String  DefaultDatabase = "srgsrohtak";
+	   
+      DriverManagerDataSource dataSource = new DriverManagerDataSource();
+      dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname",
+              "com.mysql.jdbc.Driver"));
+      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url") +DefaultDatabase+ "?createDatabaseIfNotExist=true");
+      dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user", "root"));
+      dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password", "root"));
+      return dataSource;
+   }
 
    @Bean(name = "tenantEntityManager")
    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-										   DataSource dataSource,
+										 /*  DataSource dataSource,*/
 								           MultiTenantConnectionProvider connectionProvider,
 								           CurrentTenantIdentifierResolver tenantResolver) {
       LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
       
-      emfBean.setDataSource(dataSource);
+      emfBean.setDataSource(tenantDataSource());
       emfBean.setPackagesToScan("com.appointment.schedular.model.tenant");
       emfBean.setJpaVendorAdapter(jpaVendorAdapter());
       
@@ -67,6 +82,7 @@ public class TenantDatabaseConfig {
       properties.put("hibernate.hbm2ddl.auto", springEnvironment.getProperty("hibernate.hbm2ddl.auto", "update"));
       
       emfBean.setJpaPropertyMap(properties);
+      emfBean.setPersistenceUnitName("tenant");
       return emfBean;
    }
 

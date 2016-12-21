@@ -6,13 +6,13 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.WorkingPolicyDao;
 import com.appointment.schedular.model.tenant.OrganizationWorkingPolicy;
 
 @Repository("WorkingPolicyDao")
 public class WorkingPolicyDaoImpl 
-	   extends AbstractDao<Long, OrganizationWorkingPolicy> 
+	   extends AbstractTenantDao<Long, OrganizationWorkingPolicy> 
        implements WorkingPolicyDao {
 
 	@Override

@@ -3,10 +3,6 @@
  */
 package com.appointment.schedular.dao.master;
 
-/**
- * @author Dhyanandra
- *
- */
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +20,10 @@ public interface TenantDao extends CrudRepository<Tenant, Serializable>{
 	
 	public Optional<Tenant> findByTenantKey(String tenantKey);
 
-    @Override
+   // @Override
     public List<Tenant> findAll();
+
+	
+	public Tenant save(Tenant tenant);
 
 }

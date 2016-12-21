@@ -39,8 +39,9 @@ public class MasterDatabaseConfig {
    @Autowired
    private Environment springEnvironment;
 
-   @Bean
-   public DataSource dataSource() {
+   @Bean(name= "masterDataSource")
+   public DataSource masterDataSource() {
+	  
       DriverManagerDataSource dataSource = new DriverManagerDataSource();
       dataSource.setDriverClassName(springEnvironment.getProperty("master.datasource.classname",
               "com.mysql.jdbc.Driver"));
@@ -52,11 +53,10 @@ public class MasterDatabaseConfig {
    }
 
    @Bean(name = "masterEntityManager")
-   //@Primary
    public LocalContainerEntityManagerFactoryBean masterEntityManagerFactory() {
       LocalContainerEntityManagerFactoryBean entityManagerFactoryBean 
               = new LocalContainerEntityManagerFactoryBean();
-      entityManagerFactoryBean.setDataSource(dataSource());
+      entityManagerFactoryBean.setDataSource(masterDataSource());
       entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
       JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
       entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);

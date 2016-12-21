@@ -2,12 +2,12 @@ package com.appointment.schedular.dao.tenant.impl;
 
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.OrganizationDetailsDao;
 import com.appointment.schedular.model.tenant.OrganizationDetails;
 
 @Repository("OrganizationDetailsDao")
-public class OrganizationDetailsDaoImpl extends AbstractDao<Long, OrganizationDetails>
+public class OrganizationDetailsDaoImpl extends AbstractTenantDao<Long, OrganizationDetails>
 		implements OrganizationDetailsDao {
 
 	@Override

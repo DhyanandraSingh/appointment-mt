@@ -14,7 +14,7 @@ import com.appointment.schedular.model.tenant.OrganizationWorkingPolicy;
 import com.appointment.schedular.service.OrganizationDetailsServices;
 
 @Service("OrganizationDetailsServicesImpl")
-@Transactional
+@Transactional("tenantTransactionManager")
 public class OrganizationDetailsServicesImpl 
 	   implements OrganizationDetailsServices{
 

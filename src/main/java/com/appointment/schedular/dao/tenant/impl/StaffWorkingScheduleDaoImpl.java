@@ -9,7 +9,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.StaffWorkingScheduleDao;
 import com.appointment.schedular.model.tenant.StaffWorkingSchedule;
 
@@ -20,7 +20,7 @@ import com.appointment.schedular.model.tenant.StaffWorkingSchedule;
 
 @Repository("staffWorkingScheduleDao")
 public class StaffWorkingScheduleDaoImpl
-       extends AbstractDao<Long, StaffWorkingSchedule >
+       extends AbstractTenantDao<Long, StaffWorkingSchedule >
 	   implements StaffWorkingScheduleDao{
 
 	

@@ -1,4 +1,4 @@
-package com.appointment.schedular.dao.tenant;
+package com.appointment.schedular.dao.master;
 
 import java.io.Serializable;
 
@@ -15,17 +15,17 @@ import javax.persistence.PersistenceContext;
  * @author Dhyanandra
  *
  */
-public abstract class AbstractDao<PK extends Serializable, T> {
+public abstract class AbstractMasterDao<PK extends Serializable, T> {
 
 	private final Class<T> persistentClass;
 
 	@SuppressWarnings("unchecked")
-	public AbstractDao() {
+	public AbstractMasterDao() {
 		this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
 				.getActualTypeArguments()[1];
 	}
 
-	@PersistenceContext(unitName="tenantEntityManager")
+	@PersistenceContext(unitName="masterEntityManager")
     private EntityManager entityManager;
 	
 	protected EntityManager getSession() {

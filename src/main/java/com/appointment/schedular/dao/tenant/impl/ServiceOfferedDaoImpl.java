@@ -5,13 +5,13 @@ import java.util.List;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.ServicesOfferedDao;
 import com.appointment.schedular.model.tenant.ServicesOffered;
 
 @Repository("ServicesOfferedDao")
 public class ServiceOfferedDaoImpl 
-       extends AbstractDao<Long, ServicesOffered> 
+       extends AbstractTenantDao<Long, ServicesOffered> 
        implements ServicesOfferedDao  {
 	
 	@SuppressWarnings("unchecked")

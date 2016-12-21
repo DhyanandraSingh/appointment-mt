@@ -46,7 +46,7 @@ public class TenantController {
 		Tenant tenant = mapper.convertValue(map, Tenant.class);
 		
 		String tenantKey = tenant.getName().replaceAll("[^a-zA-Z]+", "").toLowerCase().trim();
-	      Optional<Tenant> previouslyStored = tenantRepo.findByTenantKey(tenantKey);
+	      Optional<Tenant> previouslyStored =  tenantRepo.findByTenantKey(tenantKey);
 	      String response="Sorry your company name ("+tenant.getName()+")"+" is already taken";
 	      if (!previouslyStored.isPresent()) {
 	         tenant.setTenantKey(tenantKey);

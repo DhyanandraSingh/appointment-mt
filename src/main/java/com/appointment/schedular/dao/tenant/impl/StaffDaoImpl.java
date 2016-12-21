@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
-import com.appointment.schedular.dao.tenant.AbstractDao;
+import com.appointment.schedular.dao.tenant.AbstractTenantDao;
 import com.appointment.schedular.dao.tenant.StaffDao;
 import com.appointment.schedular.model.tenant.StaffDetails;
 
@@ -15,7 +15,7 @@ import com.appointment.schedular.model.tenant.StaffDetails;
  */
 @Repository("staffDao")
 public class StaffDaoImpl 
-		extends AbstractDao<Long, StaffDetails> 
+		extends AbstractTenantDao<Long, StaffDetails> 
 		implements StaffDao  {
 
 	@SuppressWarnings("unchecked")

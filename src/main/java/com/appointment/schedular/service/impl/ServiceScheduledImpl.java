@@ -21,7 +21,7 @@ import com.appointment.schedular.service.ScheduledService;
  */
 
 @Service("ServiceScheduledImpl")
-@Transactional
+@Transactional("tenantTransactionManager")
 public class ServiceScheduledImpl implements ScheduledService  {
 
 	@Autowired

@@ -41,10 +41,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         
-		auth.jdbcAuthentication()		
-		.dataSource(dataSource);
-		
-		
+		auth.jdbcAuthentication().dataSource(dataSource);
 		auth.userDetailsService(userDetailsService);
 		
 		/*auth.inMemoryAuthentication()

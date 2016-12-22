@@ -12,6 +12,7 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -80,9 +81,11 @@ public class MasterDatabaseConfig {
    }
 
    @Bean(name = "masterTransactionManager")
-   public JpaTransactionManager transactionManager(EntityManagerFactory masterEntityManager) {
+   @Primary
+   public JpaTransactionManager transactionManager(EntityManagerFactory masterEntityManager/*, DataSource dataSource*/) {
       JpaTransactionManager transactionManager = new JpaTransactionManager();
       transactionManager.setEntityManagerFactory(masterEntityManager);
+      //transactionManager.setDataSource(masterDataSource());
       return transactionManager;
    }
 }

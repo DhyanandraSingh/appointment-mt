@@ -19,11 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service("customUserDetailsService")
-@Transactional
+@Transactional("masterTransactionManager")
 public class CustomUserDetailsService implements UserDetailsService{
  
-   
-    
 	public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
       
@@ -39,8 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService{
      
     private List<GrantedAuthority> getGrantedAuthorities(String employee){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-         
-       
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         
         System.out.print("authorities :"+authorities);

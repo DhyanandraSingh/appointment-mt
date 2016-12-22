@@ -88,9 +88,10 @@ public class TenantDatabaseConfig {
    }
 
    @Bean(name = "tenantTransactionManager")
-   public JpaTransactionManager transactionManager(EntityManagerFactory tenantEntityManager) {
+   public JpaTransactionManager transactionManager(EntityManagerFactory tenantEntityManager/*,DataSource dataSource*/) {
       JpaTransactionManager transactionManager = new JpaTransactionManager();
       transactionManager.setEntityManagerFactory(tenantEntityManager);
+      //transactionManager.setDataSource(tenantDataSource());
       return transactionManager;
    }
 }

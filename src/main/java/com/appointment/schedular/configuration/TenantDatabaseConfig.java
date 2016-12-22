@@ -49,12 +49,12 @@ public class TenantDatabaseConfig {
    @Bean(name= "tenantDataSource")
    public DataSource tenantDataSource() {
 	  
-	   final String  DefaultDatabase = "srgsrohtak";
+	   final String defaultDatabase = "srgsrohtak";
 	   
       DriverManagerDataSource dataSource = new DriverManagerDataSource();
       dataSource.setDriverClassName(springEnvironment.getProperty("tenant.datasource.classname",
               "com.mysql.jdbc.Driver"));
-      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url") +DefaultDatabase+ "?createDatabaseIfNotExist=true");
+      dataSource.setUrl(springEnvironment.getProperty("tenant.datasource.url") +defaultDatabase+ "?createDatabaseIfNotExist=true");
       dataSource.setUsername(springEnvironment.getProperty("tenant.datasource.user", "root"));
       dataSource.setPassword(springEnvironment.getProperty("tenant.datasource.password", "root"));
       return dataSource;
@@ -62,10 +62,10 @@ public class TenantDatabaseConfig {
 
    @Bean(name = "tenantEntityManager")
    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-										 /*  DataSource dataSource,*/
 								           MultiTenantConnectionProvider connectionProvider,
 								           CurrentTenantIdentifierResolver tenantResolver) {
-      LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
+      
+	  LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
       
       emfBean.setDataSource(tenantDataSource());
       emfBean.setPackagesToScan("com.appointment.schedular.model.tenant");
@@ -83,6 +83,7 @@ public class TenantDatabaseConfig {
       
       emfBean.setJpaPropertyMap(properties);
       emfBean.setPersistenceUnitName("tenant");
+      
       return emfBean;
    }
 

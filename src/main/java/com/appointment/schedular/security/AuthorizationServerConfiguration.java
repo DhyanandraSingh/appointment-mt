@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.security;
+package com.appointment.schedular.security;
 
 import javax.sql.DataSource;
 
@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import com.appointment.schedular.configuration.HibernateConfiguration;
 
 @Configuration
 @EnableAuthorizationServer
@@ -33,15 +32,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
+	@Qualifier("masterDataSource")
 	private DataSource dataSource;
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
 		clients.jdbc(dataSource);
 		
-		
-		clients.inMemory().withClient("my-trusted-client")
+		/*clients.inMemory().withClient("my-trusted-client")
 				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
 				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
 				.scopes("read", "write", "trust")
@@ -50,7 +48,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				.accessTokenValiditySeconds(120).
 				// Refresh token is only valid for 10 minutes.
 				refreshTokenValiditySeconds(600);
-		
+		*/		
 	}
 
 	@Override
@@ -65,4 +63,4 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		oauthServer.realm(REALM + "/client");
 	}
 
-}*/
+}

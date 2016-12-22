@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.security;
+package com.appointment.schedular.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,4 +20,3 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 		return new OAuth2MethodSecurityExpressionHandler();
 	}
 }
-*/

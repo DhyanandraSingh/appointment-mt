@@ -33,9 +33,11 @@ public class Tenant implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
+    
     @Basic(optional = false)
     @Column(nullable = false, length = 128)
     private String name;
+    
     @Basic(optional = false)
     @Column(name = "tenant_key", nullable = false, length = 128)
     private String tenantKey;

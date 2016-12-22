@@ -1,4 +1,4 @@
-/*package com.appointment.schedular.security;
+package com.appointment.schedular.security;
 
 import javax.sql.DataSource;
 
@@ -18,10 +18,8 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import com.appointment.schedular.configuration.HibernateConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +34,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 private UserDetailsService userDetailsService;
 	
 	@Autowired
+	@Qualifier("masterDataSource")
 	private DataSource dataSource;
 	
 	
@@ -48,9 +47,9 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		auth.userDetailsService(userDetailsService);
 		
-		auth.inMemoryAuthentication()
+		/*auth.inMemoryAuthentication()
         .withUser("bill").password("abc123").roles("ADMIN").and()
-        .withUser("bob").password("abc123").roles("USER");
+        .withUser("bob").password("abc123").roles("USER");*/
     }
 
     @Override
@@ -94,4 +93,3 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 }
-*/

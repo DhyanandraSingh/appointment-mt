@@ -11,19 +11,16 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.appointment.schedular.model.master.Tenant;
 
-
 /**
  * @author Dhyanandra
  *
  */
-public interface TenantDao extends CrudRepository<Tenant, Serializable>{
+public interface TenantDao /*extends CrudRepository<Tenant, Serializable>*/{
 	
 	public Optional<Tenant> findByTenantKey(String tenantKey);
 
    // @Override
     public List<Tenant> findAll();
-
 	
 	public Tenant save(Tenant tenant);
-
 }
